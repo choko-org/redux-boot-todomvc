@@ -4,3 +4,7 @@ export const EDIT = 'redux-boot/todo/EDIT'
 export const COMPLETE = 'redux-boot/todo/COMPLETE'
 export const COMPLETE_ALL = 'redux-boot/todo/COMPLETE_ALL'
 export const CLEAR_COMPLETED = 'redux-boot/todo/CLEAR_COMPLETED'
+
+export const SHOW_ALL = 'redux-boot/todo/SHOW_ALL'
+export const SHOW_COMPLETED = 'redux-boot/todo/SHOW_COMPLETED'
+export const SHOW_ACTIVE = 'redux-boot/todo/SHOW_ACTIVE'
