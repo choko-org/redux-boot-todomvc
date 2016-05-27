@@ -1,54 +1,73 @@
 import {createAction} from 'redux-actions'
-import * as types from '../../constants/ActionTypes'
+import {
+  ADD,
+  DELETE,
+  EDIT,
+  COMPLETE,
+  COMPLETE_ALL,
+  CLEAR_COMPLETED
+} from './constants'
 
-export const addTodo = createAction(types.ADD_TODO)
-export const deleteTodo = createAction(types.DELETE_TODO)
-export const editTodo = createAction(types.EDIT_TODO)
-export const completeTodo = createAction(types.COMPLETE_TODO)
-export const completeAll = createAction(types.COMPLETE_ALL)
-export const clearCompleted = createAction(types.CLEAR_COMPLETED)
+export const addTodo = createAction(ADD)
+export const deleteTodo = createAction(DELETE)
+export const editTodo = createAction(EDIT, (id, text) => {
+  return {
+    id, text
+  }
+})
+export const completeTodo = createAction(COMPLETE)
+export const completeAll = createAction(COMPLETE_ALL)
+export const clearCompleted = createAction(CLEAR_COMPLETED)
 
 const reducer = {
 
-  [types.ADD_TODO]: (state, action) => {
+  [ADD]: (state, action) => {
+    const text = action.payload
+
     return Object.assign({}, state, {
       todos: [{
         id: state.todos.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
         completed: false,
-        text: action.text
+        text: text
       }].concat(state.todos)
     })
   },
 
-  [types.DELETE_TODO]: (state, action) => {
+  [DELETE]: (state, action) => {
+    const id = action.payload
+
     return Object.assign({}, state, {
       todos: state.todos.filter(todo =>
-        todo.id !== action.id
+        todo.id !== id
       )
     })
   },
 
-  [types.EDIT_TODO]: (state, action) => {
+  [EDIT]: (state, action) => {
+    const {id, text} = action.payload
+
     return Object.assign({}, state, {
       todos: state.todos.map(todo =>
-        todo.id === action.id ?
-          Object.assign({}, todo, { text: action.text }) :
+        todo.id === id ?
+          Object.assign({}, todo, { text: text }) :
           todo
       )
     })
   },
 
-  [types.COMPLETE_TODO]: (state, action) => {
+  [COMPLETE]: (state, action) => {
+    const id = action.payload
+
     return Object.assign({}, state, {
       todos: state.todos.map(todo =>
-        todo.id === action.id ?
+        todo.id === id ?
           Object.assign({}, todo, { completed: !todo.completed }) :
           todo
       )
     })
   },
 
-  [types.COMPLETE_ALL]: (state, action) => {
+  [COMPLETE_ALL]: (state, action) => {
     const areAllMarked = state.todos.every(todo => todo.completed)
     return Object.assign({}, state, {
       todos: state.todos.map(todo => Object.assign({}, todo, {
@@ -57,7 +76,7 @@ const reducer = {
     })
   },
 
-  [types.CLEAR_COMPLETED]: (state, action) => {
+  [CLEAR_COMPLETED]: (state, action) => {
     return Object.assign({}, state, {
       todos: state.todos.filter(todo => todo.completed === false)
     })

@@ -1,0 +1,6 @@
+export const ADD = 'redux-boot/todo/ADD'
+export const DELETE = 'redux-boot/todo/DELETE'
+export const EDIT = 'redux-boot/todo/EDIT'
+export const COMPLETE = 'redux-boot/todo/COMPLETE'
+export const COMPLETE_ALL = 'redux-boot/todo/COMPLETE_ALL'
+export const CLEAR_COMPLETED = 'redux-boot/todo/CLEAR_COMPLETED'

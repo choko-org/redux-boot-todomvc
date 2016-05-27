@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Header from '../components/Header'
 import MainSection from '../components/MainSection'
-import * as TodoActions from '../actions'
+
+import * as todoActions from '../modules/todo'
 
 class App extends Component {
   render() {
@@ -30,7 +31,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(TodoActions, dispatch)
+    actions: bindActionCreators(todoActions, dispatch)
   }
 }
 

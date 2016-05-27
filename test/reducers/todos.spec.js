@@ -1,61 +1,85 @@
 import expect from 'expect'
-import module from '../../modules/todo/todo'
-import * as types from '../../constants/ActionTypes'
-
-const todos = module.reducer;
+import {handleActions} from 'redux-actions'
+import todoModule from '../../modules/todo'
+import {
+  ADD,
+  DELETE,
+  EDIT,
+  COMPLETE,
+  COMPLETE_ALL,
+  CLEAR_COMPLETED
+} from '../../modules/todo/constants'
 
 describe('todos reducer', () => {
-  it('should handle initial state', () => {
+
+  // it('should handle initial state', () => {
+  //   expect(
+  //     todosReducers(undefined, {})
+  //   ).toEqual([
+  //     {
+  //       text: 'Use Redux',
+  //       completed: false,
+  //       id: 0
+  //     }
+  //   ])
+  // })
+  const todosReducers = handleActions(todoModule.reducer)
+
+  it('should handle ADD with empty inital state', () => {
+
+    const initialState = {
+      todos: []
+    }
+
     expect(
-      todos(undefined, {})
-    ).toEqual([
-      {
-        text: 'Use Redux',
-        completed: false,
-        id: 0
-      }
-    ])
+      todosReducers(initialState, {
+        type: ADD,
+        payload: 'Run the tests'
+      })
+    ).toEqual({
+      todos: [
+        {
+          text: 'Run the tests',
+          completed: false,
+          id: 0
+        }
+      ]
+    })
   })
 
-  it('should handle ADD_TODO', () => {
-    expect(
-      todos([], {
-        type: types.ADD_TODO,
-        text: 'Run the tests'
-      })
-    ).toEqual([
-      {
-        text: 'Run the tests',
-        completed: false,
-        id: 0
-      }
-    ])
+  it('should handle ADD with an existant collection in state', () => {
 
-    expect(
-      todos([
+    const initialState = {
+      todos: [
         {
           text: 'Use Redux',
           completed: false,
           id: 0
-        }
-      ], {
-        type: types.ADD_TODO,
-        text: 'Run the tests'
-      })
-    ).toEqual([
-      {
-        text: 'Run the tests',
-        completed: false,
-        id: 1
-      }, {
-        text: 'Use Redux',
-        completed: false,
-        id: 0
-      }
-    ])
+        } 
+      ]
+    }
 
     expect(
-      todos([
+      todosReducers(initialState, {
+        type: ADD,
+        text: 'Run the tests'
+      })
+    ).toEqual({
+      todos: [
+        {
+          text: 'Run the tests',
+          completed: false,
+          id: 1
+        }, {
+          text: 'Use Redux',
+          completed: false,
+          id: 0
+        }
+      ]
+    })
+
+    expect(
+      todosReducers([
         {
           text: 'Run the tests',
           completed: false,
@@ -66,7 +90,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: types.ADD_TODO,
+        type: ADD,
         text: 'Fix the tests'
       })
     ).toEqual([
@@ -86,9 +110,9 @@ describe('todos reducer', () => {
     ])
   })
 
-  it('should handle DELETE_TODO', () => {
+  it('should handle DELETE', () => {
     expect(
-      todos([
+      todosReducers([
         {
           text: 'Run the tests',
           completed: false,
@@ -99,7 +123,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: types.DELETE_TODO,
+        type: DELETE,
         id: 1
       })
     ).toEqual([
@@ -111,9 +135,9 @@ describe('todos reducer', () => {
     ])
   })
 
-  it('should handle EDIT_TODO', () => {
+  it('should handle EDIT', () => {
     expect(
-      todos([
+      todosReducers([
         {
           text: 'Run the tests',
           completed: false,
@@ -124,7 +148,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: types.EDIT_TODO,
+        type: EDIT,
         text: 'Fix the tests',
         id: 1
       })
@@ -141,9 +165,9 @@ describe('todos reducer', () => {
     ])
   })
 
-  it('should handle COMPLETE_TODO', () => {
+  it('should handle COMPLETE', () => {
     expect(
-      todos([
+      todosReducers([
         {
           text: 'Run the tests',
           completed: false,
@@ -154,7 +178,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: types.COMPLETE_TODO,
+        type: COMPLETE,
         id: 1
       })
     ).toEqual([
@@ -172,7 +196,7 @@ describe('todos reducer', () => {
 
   it('should handle COMPLETE_ALL', () => {
     expect(
-      todos([
+      todosReducers([
         {
           text: 'Run the tests',
           completed: true,
@@ -183,7 +207,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: types.COMPLETE_ALL
+        type: COMPLETE_ALL
       })
     ).toEqual([
       {
@@ -199,7 +223,7 @@ describe('todos reducer', () => {
 
     // Unmark if all todos are currently completed
     expect(
-      todos([
+      todosReducers([
         {
           text: 'Run the tests',
           completed: true,
@@ -210,7 +234,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: types.COMPLETE_ALL
+        type: COMPLETE_ALL
       })
     ).toEqual([
       {
@@ -227,7 +251,7 @@ describe('todos reducer', () => {
 
   it('should handle CLEAR_COMPLETED', () => {
     expect(
-      todos([
+      todosReducers([
         {
           text: 'Run the tests',
           completed: true,
@@ -238,7 +262,7 @@ describe('todos reducer', () => {
           id: 0
         }
       ], {
-        type: types.CLEAR_COMPLETED
+        type: CLEAR_COMPLETED
       })
     ).toEqual([
       {
@@ -253,12 +277,12 @@ describe('todos reducer', () => {
     expect(
       [
         {
-          type: types.COMPLETE_TODO,
+          type: COMPLETE,
           id: 0
         }, {
-          type: types.CLEAR_COMPLETED
+          type: CLEAR_COMPLETED
         }, {
-          type: types.ADD_TODO,
+          type: ADD,
           text: 'Write more tests'
         }
       ].reduce(todos, [

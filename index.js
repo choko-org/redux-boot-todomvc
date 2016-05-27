@@ -6,7 +6,7 @@ import App from './containers/App'
 import 'todomvc-app-css/index.css'
 
 import boot from 'redux-boot'
-import todo from './modules/todo/todo'
+import todo from './modules/todo'
 
 const initialState = {
   todos: [
