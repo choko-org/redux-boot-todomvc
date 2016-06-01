@@ -7,6 +7,7 @@ import 'todomvc-app-css/index.css'
 
 import boot from 'redux-boot'
 import todo from './modules/todo'
+import devel from './modules/sandbox/devel'
 
 const initialState = {
   todos: [
@@ -19,6 +20,7 @@ const initialState = {
 }
 
 const modules = [
+  devel,
   todo
 ]
 
