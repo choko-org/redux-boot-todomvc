@@ -1,16 +1,16 @@
-var path = require('path');
+import path from 'path'
+import express from 'express'
 
-var express = require('express');
-var app = new (express)()
-var port = 3000
+const app = new (express)()
+const port = 3000
 
 app.use('/static', express.static('dist'));
 
-app.get("/", function(req, res) {
+app.get("/", (req, res) => {
   res.sendFile(path.resolve('./index.html'))
 })
 
-app.listen(port, function(error) {
+app.listen(port, error => {
   if (error) {
     console.error(error)
   } else {
