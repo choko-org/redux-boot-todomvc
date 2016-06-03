@@ -19,11 +19,9 @@ module.exports = {
     index: './server.js',
   },
 
-  // context: __dirname,
-
   node: {
-    __dirname: false,
-    __filename: false,
+    __dirname: true,
+    __filename: true,
   },
 
   target: 'node',

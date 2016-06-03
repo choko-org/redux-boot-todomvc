@@ -1,3 +1,5 @@
+var path = require('path');
+
 var express = require('express');
 var app = new (express)()
 var port = 3000
@@ -5,7 +7,7 @@ var port = 3000
 app.use('/static', express.static('dist'));
 
 app.get("/", function(req, res) {
-  res.sendFile(__dirname + '/index.html')
+  res.sendFile(path.resolve('./index.html'))
 })
 
 app.listen(port, function(error) {
