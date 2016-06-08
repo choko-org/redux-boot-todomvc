@@ -1,31 +1,18 @@
 import path from 'path'
-import express from 'express'
+import boot from 'redux-boot'
+import expressModule from 'redux-boot-express'
+import serverModule from './modules/server'
 
-const app = new (express)()
-const port = 3000
+const initialState = {}
+
+let modules = [
+  expressModule,
+  serverModule
+]
 
 if (process.env.NODE_ENV !== 'production') {
-  const webpack = require('webpack')
-  const webpackDevMiddleware = require('webpack-dev-middleware')
-  const webpackHotMiddleware = require('webpack-hot-middleware')
-  const config = require('./webpack.config.js')
-  const compiler = webpack(config)
-
-  app.use(webpackHotMiddleware(compiler))
-  app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath
-  }))
+  const webpackDevModule = require('./modules/sandbox/webpack-dev-server').default
+  modules.push(webpackDevModule)
 }
 
-app.get("/", (req, res) => {
-  res.sendFile(path.resolve('./index.html'))
-})
-
-app.listen(port, error => {
-  if (error) {
-    console.error(error)
-  } else {
-    console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port)
-  }
-})
+const app = boot(initialState, modules)
