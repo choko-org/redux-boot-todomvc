@@ -4,6 +4,7 @@
   "description": "Redux TodoMVC example",
   "scripts": {
     "start": "npm run build && node bin/server.babel.js",
+    "start-dev": "node bin/server.babel.js",
     "build": "webpack",
     "test": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register --require ./test/setup.js",
     "test:watch": "npm test -- --watch"
