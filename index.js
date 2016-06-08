@@ -9,7 +9,7 @@ import boot from 'redux-boot'
 import todo from './modules/todo'
 import devel from './modules/sandbox/devel'
 
-const initialState = {
+const initialState = Object.assign({}, {
   todos: [
     {
       text: 'Use Redux Boot',
@@ -17,7 +17,7 @@ const initialState = {
       id: 0
     }
   ]
-}
+}, JSON.parse(localStorage.getItem('state')))
 
 const modules = [
   devel,
@@ -27,6 +27,12 @@ const modules = [
 const app = boot(initialState, modules)
 
 app.then(({action, store}) => {
+
+  // Save state in local storage.
+  store.subscribe(() => {
+    const state = store.getState()
+    localStorage.setItem('state', JSON.stringify(state))
+  })
 
   render(
     <Provider store={store}>
