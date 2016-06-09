@@ -8,10 +8,10 @@ import * as todoActions from '../modules/todo'
 
 class App extends Component {
   render() {
-    const { todos, actions } = this.props
+    const { todos, actions, title } = this.props
     return (
       <div>
-        <Header addTodo={actions.addTodo} />
+        <Header title={title} addTodo={actions.addTodo} />
         <MainSection todos={todos} actions={actions} />
       </div>
     )
@@ -25,7 +25,8 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    todos: state.todos
+    todos: state.todos,
+    title: state.title
   }
 }
 

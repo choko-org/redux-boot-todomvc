@@ -9,7 +9,11 @@ import boot from 'redux-boot'
 import todo from './modules/todo'
 import devel from './modules/sandbox/devel'
 
+const url = window.location.href.toString().split(window.location.host)[1]
+const stateKey = 'state' + url
+
 const initialState = Object.assign({}, {
+  title: url.split('/').pop(),
   todos: [
     {
       text: 'Use Redux Boot',
@@ -17,7 +21,7 @@ const initialState = Object.assign({}, {
       id: 0
     }
   ]
-}, JSON.parse(localStorage.getItem('state')))
+}, JSON.parse(localStorage.getItem(stateKey)))
 
 const modules = [
   devel,
@@ -31,7 +35,7 @@ app.then(({action, store}) => {
   // Save state in local storage.
   store.subscribe(() => {
     const state = store.getState()
-    localStorage.setItem('state', JSON.stringify(state))
+    localStorage.setItem(stateKey, JSON.stringify(state))
   })
 
   render(
