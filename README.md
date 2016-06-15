@@ -1,6 +1,7 @@
 # Redux Boot TODO MVC
 
-This is the classic TODO MVC example using [React](), [Redux](http://redux.js.org) and [Webpack]() but also using [Redux Boot](https://github.com/choko-org/redux-boot) to demonstrate how it can simplify application development even more by adding modularization.
+This is the classic TODO MVC example using [React](https://facebook.github.io/react), [Redux](http://redux.js.org) and [Webpack](
+https://webpack.github.io), and also using [Redux Boot](https://github.com/choko-org/redux-boot) to demonstrate how it can simplify application development even more by adding modularization.
 
 ## What is [Redux Boot](https://github.com/choko-org/redux-boot)?
 
@@ -14,18 +15,19 @@ Redux boot is used on both the frontend and the backend applications. You can ha
 
 ```sh
 git clone https://github.com/choko-org/redux-boot-todomvc.git
+cd redux-boot-todomvc
+npm install
 ```
 
 **Build and run**
 
 ```js
-npm install
 npm start
 ```
 
 ## Development setup
 
-**Start application**
+**Start development application**
 
 ```js
 npm run start-dev
