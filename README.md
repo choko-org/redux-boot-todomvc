@@ -1,4 +1,4 @@
-# Redux Boot TODO MVC
+# Redux Boot Todo MVC
 
 This is the classic TODO MVC example using [React](https://facebook.github.io/react), [Redux](http://redux.js.org) and [Webpack](
 https://webpack.github.io), and also using [Redux Boot](https://github.com/choko-org/redux-boot) to demonstrate how it can simplify application development even more by adding modularization.
